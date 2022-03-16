@@ -1,16 +1,15 @@
 package com.twitter.elastic.models;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.asm.TypeReference;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Mapping;
+import org.springframework.data.elasticsearch.annotations.Setting;
 
-import java.util.HashMap;
-import java.util.Map;
 
-@Document(indexName = "tweets")
+@Document(indexName = "uselection")
+//@Setting(settingPath = "/settings/elasticsettings.json")
+//@Mapping(mappingPath = "/mappings/mappings.json")
 public class Tweet {
 
     private String text;

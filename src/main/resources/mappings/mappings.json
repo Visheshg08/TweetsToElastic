@@ -1,0 +1,14 @@
+{
+  "mappings": {
+    "properties": {
+      "text": {
+        "type": "text",
+        "analyzer": "english_stop",
+        "fielddata": true
+      },
+      "id":{
+        "type": "text"
+      }
+    }
+  }
+}

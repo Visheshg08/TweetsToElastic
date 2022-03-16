@@ -1,0 +1,18 @@
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "english_stop": {
+          "tokenizer": "whitespace",
+          "filter": [ "my_custom_stop_words_filter" ]
+        }
+      },
+      "filter": {
+        "my_custom_stop_words_filter": {
+          "type": "stop",
+          "ignore_case": true
+        }
+      }
+    }
+  }
+}

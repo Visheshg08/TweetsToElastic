@@ -1,8 +1,11 @@
-package com.twitter.elastic;
+package com.twitter.elastic.config;
 
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.HttpHost;
+import org.elasticsearch.client.ElasticsearchClient;
+import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,8 +20,8 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 @ComponentScan
 public class ElasticSearchClientConfig extends
         AbstractElasticsearchConfiguration {
+
     @Override
-    @Bean
     public RestHighLevelClient elasticsearchClient() {
 
         final ClientConfiguration clientConfiguration =
@@ -27,7 +30,10 @@ public class ElasticSearchClientConfig extends
                         .connectedTo("localhost:9200")
                         .build();
 
+
+
         return RestClients.create(clientConfiguration).rest();
+
     }
 
     @Bean
