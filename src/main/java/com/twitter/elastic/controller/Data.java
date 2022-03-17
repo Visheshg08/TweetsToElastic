@@ -26,7 +26,6 @@ public class Data {
 
     @GetMapping("/saveTweets")
     public List<Tweet> saveTweets() throws Exception {
-
         return tweetData.saveTweets();
     }
     @GetMapping("savedTweets")

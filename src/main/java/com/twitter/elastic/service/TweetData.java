@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,11 @@ public class TweetData {
 
     @Autowired
     ElasticTweet elasticTweet;
+
+    @Autowired
+    ElasticsearchRestTemplate elasticsearchRestTemplate;
+
+
 
     @Autowired
     RestHighLevelClient restHighLevelClient;
@@ -64,49 +71,49 @@ public class TweetData {
 //
 //
 //
-        GetIndexRequest response = new GetIndexRequest(indexName);
-        if (response== null){
-
-            IndexRequest request= new IndexRequest(indexName);
-
-            String settings="{\n" +
-                    "  \"settings\": {\n" +
-                    "    \"analysis\": {\n" +
-                    "      \"analyzer\": {\n" +
-                    "        \"english_stop\": {\n" +
-                    "          \"tokenizer\": \"whitespace\",\n" +
-                    "          \"filter\": [ \"my_custom_stop_words_filter\" ]\n" +
-                    "        }\n" +
-                    "      },\n" +
-                    "      \"filter\": {\n" +
-                    "        \"my_custom_stop_words_filter\": {\n" +
-                    "          \"type\": \"stop\",\n" +
-                    "          \"ignore_case\": true\n" +
-                    "        }\n" +
-                    "      }\n" +
-                    "    }\n" +
-                    "  }\n" +
-                    "}";
-
-            String mapping="{\n" +
-                    "  \"mappings\": {\n" +
-                    "    \"properties\": {\n" +
-                    "      \"text\": {\n" +
-                    "        \"type\": \"text\",\n" +
-                    "        \"analyzer\": \"english_stop\",\n" +
-                    "        \"fielddata\": true\n" +
-                    "      },\n" +
-                    "      \"id\":{\n" +
-                    "        \"type\": \"text\"\n" +
-                    "      }\n" +
-                    "    }\n" +
-                    "  }\n" +
-                    "}\n";
-
-            request.source(settings, XContentType.JSON);
-            request.source(mapping,XContentType.JSON);
-            IndexResponse indexResponse = restHighLevelClient.index(request,
-                    RequestOptions.DEFAULT);
+//        GetIndexRequest response = new GetIndexRequest(indexName);
+//        if (response== null){
+//
+//            IndexRequest request= new IndexRequest(indexName);
+//
+//            String settings="{\n" +
+//                    "  \"settings\": {\n" +
+//                    "    \"analysis\": {\n" +
+//                    "      \"analyzer\": {\n" +
+//                    "        \"english_stop\": {\n" +
+//                    "          \"tokenizer\": \"whitespace\",\n" +
+//                    "          \"filter\": [ \"my_custom_stop_words_filter\" ]\n" +
+//                    "        }\n" +
+//                    "      },\n" +
+//                    "      \"filter\": {\n" +
+//                    "        \"my_custom_stop_words_filter\": {\n" +
+//                    "          \"type\": \"stop\",\n" +
+//                    "          \"ignore_case\": true\n" +
+//                    "        }\n" +
+//                    "      }\n" +
+//                    "    }\n" +
+//                    "  }\n" +
+//                    "}";
+//
+//            String mapping="{\n" +
+//                    "  \"mappings\": {\n" +
+//                    "    \"properties\": {\n" +
+//                    "      \"text\": {\n" +
+//                    "        \"type\": \"text\",\n" +
+//                    "        \"analyzer\": \"english_stop\",\n" +
+//                    "        \"fielddata\": true\n" +
+//                    "      },\n" +
+//                    "      \"id\":{\n" +
+//                    "        \"type\": \"text\"\n" +
+//                    "      }\n" +
+//                    "    }\n" +
+//                    "  }\n" +
+//                    "}\n";
+//
+//            request.source(settings, XContentType.JSON);
+//            request.source(mapping,XContentType.JSON);
+//            IndexResponse indexResponse = restHighLevelClient.index(request,
+//                    RequestOptions.DEFAULT);
 
 
 //
@@ -145,7 +152,7 @@ public class TweetData {
 //
 //
 //
-    }
+    //}
 //
 
 
@@ -172,9 +179,7 @@ public class TweetData {
                 data.add(strCurrentLine);
             }
         }
-
         http.disconnect();
-
         return data;
     }
 
@@ -182,22 +187,14 @@ public class TweetData {
     public List<Tweet> saveTweets() throws Exception {
 
         List<String> data=tweetsData();
-
         String temp= data.get(0);
-
         Response response =objectMapper.readValue(temp, Response.class);
-
         elasticTweet.saveAll(response.getData());
-
         return response.getData();
-
     }
 
 
     public Iterable<Tweet> savedTweets(){
-
-
         return  elasticTweet.findAll();
-
     }
 }

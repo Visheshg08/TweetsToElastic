@@ -8,8 +8,8 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 
 
 @Document(indexName = "uselection")
-//@Setting(settingPath = "/settings/elasticsettings.json")
-//@Mapping(mappingPath = "/mappings/mappings.json")
+@Setting(settingPath = "/settings/elasticsettings.json")
+@Mapping(mappingPath = "/mappings/mappings.json")
 public class Tweet {
 
     private String text;
