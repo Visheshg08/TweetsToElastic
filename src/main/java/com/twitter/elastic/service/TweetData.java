@@ -1,22 +1,15 @@
 package com.twitter.elastic.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.twitter.elastic.Repo.ElasticTweet;
-import com.twitter.elastic.models.Response;
+import com.twitter.elastic.Repo.TweetRepo;
+import com.twitter.elastic.models.TwitterResponse;
 import com.twitter.elastic.models.Tweet;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 
-import org.elasticsearch.client.indices.CreateIndexRequest;
-import org.elasticsearch.client.indices.GetIndexRequest;
-import org.elasticsearch.common.xcontent.XContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -36,7 +29,7 @@ public class TweetData {
     private Logger logger=  LoggerFactory.getLogger(TweetData.class);
 
     @Autowired
-    ElasticTweet elasticTweet;
+    TweetRepo tweetRepo;
 
     @Autowired
     ElasticsearchRestTemplate elasticsearchRestTemplate;
@@ -55,16 +48,6 @@ public class TweetData {
     @Value("${index.name}")
     private String indexName;
 
-
-//
-//    public void createIndex(){
-//
-//        CreateIndexRequest request= new CreateIndexRequest(indexName);
-//        request.settings(Settings.builder().putProperties());
-//
-//        request.mapping()
-//
-//    }
 
 
     public List<String> tweetsData() throws Exception {
@@ -188,13 +171,13 @@ public class TweetData {
 
         List<String> data=tweetsData();
         String temp= data.get(0);
-        Response response =objectMapper.readValue(temp, Response.class);
-        elasticTweet.saveAll(response.getData());
+        TwitterResponse response =objectMapper.readValue(temp, TwitterResponse.class);
+        tweetRepo.saveAll(response.getData());
         return response.getData();
     }
 
 
     public Iterable<Tweet> savedTweets(){
-        return  elasticTweet.findAll();
+        return  tweetRepo.findAll();
     }
 }

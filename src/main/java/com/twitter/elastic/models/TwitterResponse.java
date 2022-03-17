@@ -2,7 +2,7 @@ package com.twitter.elastic.models;
 
 import java.util.List;
 
-public class Response {
+public class TwitterResponse {
 
     private List<Tweet> data;
 
