@@ -1,7 +1,7 @@
 package com.twitter.elastic.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.twitter.elastic.Repo.TweetRepo;
+import com.twitter.elastic.repo.TweetRepo;
 import com.twitter.elastic.models.TwitterResponse;
 import com.twitter.elastic.models.Tweet;
 import org.elasticsearch.client.RestHighLevelClient;

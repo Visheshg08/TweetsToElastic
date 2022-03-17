@@ -1,4 +1,4 @@
-package com.twitter.elastic.Repo;
+package com.twitter.elastic.repo;
 
 import com.twitter.elastic.models.Tweet;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;

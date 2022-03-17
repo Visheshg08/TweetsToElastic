@@ -1,10 +1,7 @@
-package com.twitter.elastic.Repo;
+package com.twitter.elastic.repo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-
-import javax.management.Query;
 
 public class TweetRepository {
 
