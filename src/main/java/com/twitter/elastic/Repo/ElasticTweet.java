@@ -13,5 +13,6 @@ import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 public interface ElasticTweet extends ElasticsearchRepository<Tweet, String> {
 
 
+
 }
 

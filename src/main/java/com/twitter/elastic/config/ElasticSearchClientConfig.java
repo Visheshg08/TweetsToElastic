@@ -55,9 +55,7 @@ public class ElasticSearchClientConfig extends
 
     }
 
-    @Bean
-    public ElasticsearchOperations elasticsearchRestTemplate(){
-        return new ElasticsearchRestTemplate(elasticsearchClient());
 
-    }
+
+
 }
