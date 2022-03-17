@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping
-public class TweetsCongtroller {
+public class TweetsController {
 
     @Autowired
     private TweetData tweetData;
